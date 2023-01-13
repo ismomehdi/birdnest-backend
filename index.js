@@ -6,13 +6,19 @@ const app = express()
 const dronesAPI = {
     target: 'https://assignments.reaktor.com/birdnest/drones',
     changeOrigin: true,
-    pathRewrite: { '^/api/drones': '' }
+    pathRewrite: { '^/api/drones': '' },
+    onProxyRes: function (proxyRes, req, res) {
+        proxyRes.headers['Access-Control-Allow-Origin'] = '*'
+    }
 }
 
 const pilotsAPI = {
     target: 'https://assignments.reaktor.com/birdnest/pilots/',
     changeOrigin: true,
-    pathRewrite: { '/api/pilots/': ''}
+    pathRewrite: { '/api/pilots/': ''},
+    onProxyRes: function (proxyRes, req, res) {
+        proxyRes.headers['Access-Control-Allow-Origin'] = '*'
+    }
 }
 
 const dronesProxy = createProxyMiddleware(dronesAPI)
