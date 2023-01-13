@@ -1,30 +1,50 @@
 const express = require('express')
-const { createProxyMiddleware } = require('http-proxy-middleware')
+const axios = require("axios")
+const { XMLParser } = require("fast-xml-parser")
 
 const app = express()
 
-const dronesAPI = {
-    target: 'https://assignments.reaktor.com/birdnest/drones',
-    changeOrigin: true,
-    pathRewrite: { '^/api/drones': '' },
-    onProxyRes: function (proxyRes, req, res) {
-        proxyRes.headers['Access-Control-Allow-Origin'] = '*'
-    }
+const scrapeDrones = async () => {
+    const dronesUrl = 'https://assignments.reaktor.com/birdnest/drones'
+    
+    const request = axios.get(dronesUrl)
+    const response = await request
+
+    return response.data
 }
 
-const pilotsAPI = {
-    target: 'https://assignments.reaktor.com/birdnest/pilots/',
-    changeOrigin: true,
-    pathRewrite: { '/api/pilots/': ''},
-    onProxyRes: function (proxyRes, req, res) {
-        proxyRes.headers['Access-Control-Allow-Origin'] = '*'
-    }
+const parseDrones = async (data) => {
+    const parser = new XMLParser()
+    const parsedData = parser.parse(data)
+                        .report.capture.drone
+
+    const allDrones = parsedData
+                        .map(drone => ({
+                            serialNumber: drone.serialNumber,
+                            Y: parseFloat(drone.positionY),
+                            X: parseFloat(drone.positionX)
+                        }))
+
+    return allDrones
 }
 
-const dronesProxy = createProxyMiddleware(dronesAPI)
-app.use('/api/drones', dronesProxy)
+app.get('/api/drones', async (req, res) => {
+    const data = await scrapeDrones()
+    const drones = await parseDrones(data)
 
-const pilotsProxy = createProxyMiddleware(pilotsAPI)
-app.use('/api/pilots/:serialNumber', pilotsProxy)
+    console.log('')
+    console.log('this is the raw data:')
+    console.log('')
+    console.log(data)
+    console.log('')
+
+    console.log('these are the parsed drones:')
+    console.log('')
+    console.log(drones)
+    console.log('')
+
+
+    res.send('hello world!')
+})
 
 app.listen(3001)
