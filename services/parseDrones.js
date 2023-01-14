@@ -1,6 +1,6 @@
 const { XMLParser } = require("fast-xml-parser")
 
-const parseDrones = async (data) => {
+const parseDrones = (data) => {
     const parser = new XMLParser()
     const parsedData = parser.parse(data)
                         .report.capture.drone

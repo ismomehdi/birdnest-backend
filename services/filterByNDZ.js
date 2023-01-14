@@ -5,10 +5,8 @@ const filterByNDZ = (drones) => {
 
     const getDistance = (drone) => {
         var d = Math.sqrt(
-
             (drone.X - ndzX) ** 2 + 
             (drone.Y - ndzY) ** 2
-
         )
 
         return d
