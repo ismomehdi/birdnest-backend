@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
@@ -17,33 +18,25 @@ const scrape = async () => {
     const ndzDrones = await filterByNDZ(drones)
     const ndzPilots = await getNDZPilots(ndzDrones)
 
-    console.log('')
-    console.log('this is the raw data:')
-    console.log('')
-    console.log(data)
-    console.log('')
+    return ndzPilots
+}
 
-    console.log('these are the parsed drones:')
-    console.log('')
-    console.log(drones)
-    console.log('')
+const savePilot = async (pilot) => {
+    if (pilot === undefined) { return }
 
-    console.log('these are the ndz drones:')
-    console.log('')
-    console.log(ndzDrones)
-    console.log('')
-
-    console.log('this is the pilot data:')
-    console.log('')
-    console.log(ndzPilots)
-    console.log('')
-
+    const dbObject = new Pilot({ ...pilot })
+    const savedPilot = await dbObject.save()
 }
 
 app.get('/', async (req, res) => {
     res.send('hello world!')
 })
 
-setInterval(scrape, 2000)
+setInterval( async () => {
+    const ndzPilots = await scrape()
+    const savePilots = await savePilot(...ndzPilots)
+    console.log('ndzPilots', ndzPilots)
+}, 2000)
 
-app.listen(3001)
+const PORT = process.env.PORT
+app.listen(PORT)
