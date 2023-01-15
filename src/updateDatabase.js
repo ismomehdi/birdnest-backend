@@ -6,7 +6,7 @@ updateDatabase = async () => {
 
     console.log('the pilots are', ndzPilots)
 
-    if (ndzPilots) await Promise.all(ndzPilots.map(saveAll(pilot)))
+    if (ndzPilots) await Promise.all(ndzPilots.map(saveAll))
 }
 
 module.exports = { updateDatabase }
