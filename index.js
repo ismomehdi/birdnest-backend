@@ -30,7 +30,7 @@ const savePilot = async (pilot) => {
     let doc = await Pilot.findOneAndUpdate(filter, update, {
         new: true,
         upsert: true
-      })      
+      }) 
 }
 
 app.get('/', async (req, res) => {
@@ -40,6 +40,7 @@ app.get('/', async (req, res) => {
 setInterval( async () => {
     const ndzPilots = await scrape()
     ndzPilots.forEach(async pilot => await savePilot(pilot))
+    console.log(ndzPilots)
 }, 2000)
 
 const PORT = process.env.PORT

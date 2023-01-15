@@ -17,10 +17,10 @@ const pilotSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   phoneNumber: String,
-  createdDt: Date,
   email: String,
   droneSerialNumber: String,
-  droneDistance: Number
+  droneDistance: Number,
+  expireAt: { type: Date, expires: 600, default: Date.now }
 })
 
 pilotSchema.set('toJSON', {

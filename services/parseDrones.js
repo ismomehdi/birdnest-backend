@@ -2,10 +2,10 @@ const { XMLParser } = require("fast-xml-parser")
 
 const parseDrones = (data) => {
     const parser = new XMLParser()
-    const parsedData = parser.parse(data)
-                        .report.capture.drone
 
-    const allDrones = parsedData
+    const parsedDrones = parser.parse(data).report.capture.drone
+
+    const allDrones = parsedDrones
                         .map(drone => ({
                             serialNumber: drone.serialNumber,
                             Y: parseFloat(drone.positionY),
@@ -13,6 +13,6 @@ const parseDrones = (data) => {
                         }))
 
     return allDrones
-}
+} 
 
 module.exports = { parseDrones }
