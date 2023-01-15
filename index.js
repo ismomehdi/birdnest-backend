@@ -2,7 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
+const { connectDb } = require('./services/connectDb')
 const Pilot = require('./models/pilot')
+const ClosestDistance = require('./models/closestDistance')
 
 const { scrapeDrones } = require('./services/scrapeDrones')
 const { parseDrones } = require('./services/parseDrones')
@@ -11,6 +13,9 @@ const { getNDZPilots } = require('./services/getNDZPilots')
 
 const app = express()
 app.use(cors())
+
+const url = process.env.MONGODB_URI
+connectDb(url)
 
 const scrape = async () => {
     const data = await scrapeDrones()
@@ -33,13 +38,37 @@ const savePilot = async (pilot) => {
       }) 
 }
 
+const isClosestDistance = async (pilot) => {
+    let doc = await ClosestDistance.findOne({})
+    let closestDistance = doc ? doc.droneDistance : null
+
+    return pilot.droneDistance < closestDistance || closestDistance === null
+}
+
+const saveClosestDistance = async (pilot) => {
+    console.log('\nSaving closest distance...\n')
+
+    const newClosestDistance = new ClosestDistance({
+        droneSerialNumber: pilot.droneSerialNumber,
+        droneDistance: pilot.droneDistance
+    })
+
+    await newClosestDistance.save()
+    console.log('Saved closest distance')
+}
+
 app.get('/', async (req, res) => {
     res.send('hello world!')
 })
 
 setInterval( async () => {
     const ndzPilots = await scrape()
-    ndzPilots.forEach(async pilot => await savePilot(pilot))
+
+    ndzPilots.forEach(async pilot => {
+        await savePilot(pilot)
+        if (await isClosestDistance(pilot)) await saveClosestDistance(pilot)
+    })
+
     console.log(ndzPilots)
 }, 2000)
 
