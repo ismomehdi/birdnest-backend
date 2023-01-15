@@ -3,6 +3,7 @@ const Pilot = require('../models/pilot')
 
 pilotsRouter.get('/', async (req, res) => {
     const pilots = await Pilot.find({})
+
     res.json(pilots)
   })
 

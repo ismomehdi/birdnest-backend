@@ -9,8 +9,12 @@ const { updateDatabase } = require('./src/updateDatabase')
 
 const pilotsRouter = require('./controllers/pilots')
 const closestDistanceRouter = require('./controllers/closestDistance')
+const Pilot = require('./models/pilot')
 
 const server = http.createServer(app)
+
+const pilots = Pilot.find({}).then(result => console.log(result))
+
 connectDb(config.MONGODB_URI)
 app.use(cors())
 
