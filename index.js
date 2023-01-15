@@ -22,10 +22,15 @@ const scrape = async () => {
 }
 
 const savePilot = async (pilot) => {
-    if (pilot === undefined) { return }
+    const filter = { droneSerialNumber: pilot.droneSerialNumber }
+    const update = { ...pilot }
 
-    const dbObject = new Pilot({ ...pilot })
-    const savedPilot = await dbObject.save()
+    console.log('\nSaving pilot...\n')
+
+    let doc = await Pilot.findOneAndUpdate(filter, update, {
+        new: true,
+        upsert: true
+      })      
 }
 
 app.get('/', async (req, res) => {
@@ -34,8 +39,7 @@ app.get('/', async (req, res) => {
 
 setInterval( async () => {
     const ndzPilots = await scrape()
-    const savePilots = await savePilot(...ndzPilots)
-    console.log('ndzPilots', ndzPilots)
+    ndzPilots.forEach(async pilot => await savePilot(pilot))
 }, 2000)
 
 const PORT = process.env.PORT

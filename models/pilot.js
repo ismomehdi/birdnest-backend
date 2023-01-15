@@ -19,7 +19,8 @@ const pilotSchema = new mongoose.Schema({
   phoneNumber: String,
   createdDt: Date,
   email: String,
-  droneSerialNumber: String
+  droneSerialNumber: String,
+  droneDistance: Number
 })
 
 pilotSchema.set('toJSON', {
@@ -32,5 +33,3 @@ pilotSchema.set('toJSON', {
 
 const Pilot = mongoose.model('Pilot', pilotSchema)
 module.exports = Pilot
-
-
