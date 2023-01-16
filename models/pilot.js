@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const pilotSchema = new mongoose.Schema({
+  category: { type: String, default: 'pilot' },
   pilotId: String,
   firstName: String,
   lastName: String,

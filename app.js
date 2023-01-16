@@ -2,6 +2,7 @@ const config = require('./utils/config')
 const express = require('express')
 const app = express()
 const WebSocket = require('ws')
+const getAllFromDb = require('./lib/getAllFromDb')
 
 const cors = require('cors')
 const { connectDb } = require('./lib/connectDb')
@@ -13,11 +14,12 @@ const wss = new WebSocket.Server({ port: 3001 })
 setInterval(updateDatabase, 2000)
 
 wss.on('connection', (ws) => {
-  ws.send('Hello')
+  getAllFromDb().then(data => ws.send(JSON.stringify(data)))
 
   setInterval(() => {
+
     if (ws.readyState === WebSocket.OPEN) {
-        ws.send('Hello');
+      getAllFromDb().then(data => ws.send(JSON.stringify(data)))
     }
   }, 2000)
 })

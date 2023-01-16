@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const closestDistanceSchema = new mongoose.Schema(
 {
+    category: { type: String, default: 'closestDistance' },
     droneSerialNumber: String,
     droneDistance: Number  
 }, 
