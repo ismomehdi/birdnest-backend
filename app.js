@@ -1,27 +1,29 @@
-const config = require('./config/config')
+const config = require('./utils/config')
 const express = require('express')
 const app = express()
-const http = require('http')
-const cors = require('cors')
+const WebSocket = require('ws')
 
+const cors = require('cors')
 const { connectDb } = require('./lib/connectDb')
 const { updateDatabase } = require('./src/updateDatabase')
 
-const pilotsRouter = require('./controllers/pilots')
-const closestDistanceRouter = require('./controllers/closestDistance')
-const Pilot = require('./models/pilot')
-
-const server = http.createServer(app)
-
-const pilots = Pilot.find({}).then(result => console.log(result))
-
 connectDb(config.MONGODB_URI)
+
+const wss = new WebSocket.Server({ port: 3001 }) 
+setInterval(updateDatabase, 2000)
+
+wss.on('connection', (ws) => {
+  ws.send('Hello')
+
+  setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send('Hello');
+    }
+  }, 2000)
+})
+
 app.use(cors())
 
-setInterval(updateDatabase, 2000)
-app.use('/api/pilots', pilotsRouter)
-app.use('/api/closest', closestDistanceRouter)
-
-server.listen(config.PORT, () => {
-    console.log(`Server running on port ${config.PORT}`)
-  })
+//server.listen(config.PORT, () => {
+//    console.log(`Server running on port ${config.PORT}`)
+//  })
