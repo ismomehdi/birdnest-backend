@@ -40,3 +40,10 @@ The `index.js` configures [Express](https://github.com/expressjs/express) to ser
 
 Take a look at the frontend [here](https://github.com/ismomehdi/birdnest-frontend).
 
+## Weaknesses
+
+- MongoDB checks for expired documents every 60 seconds. As a result the pilot data could persist in the database slightly more than 10 minutes. Also, the workload [might affect the expiration time](https://www.mongodb.com/docs/manual/core/index-ttl/#timing-of-the-delete-operation).
+- Proper unit tests are needed.
+
+
+
