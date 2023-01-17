@@ -9,3 +9,7 @@ Take a look at the app [here](https://spring-moon-3266.fly.dev/).
 - Then `updateDatabase` calls `scrapeAndParse` which pulls the drone/pilot data from the API and returns the processed data to `updateDatabase`.
 
 ![Backend Diagram 0](/doc/backend-diagram-0.svg)
+
+- Next `updateDatabase`
+
+![Backend Diagram 0](/doc/backend-diagram-1.svg)
