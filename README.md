@@ -52,6 +52,6 @@ Take a look at the frontend [here](https://github.com/ismomehdi/birdnest-fronten
 
 - MongoDB checks for expired documents every 60 seconds. As a result the pilot data could persist in the database slightly more than 10 minutes. Also, the workload [might affect the expiration time](https://www.mongodb.com/docs/manual/core/index-ttl/#timing-of-the-delete-operation).
 - Proper unit tests are needed.
-- Not mobile friendly, the data table doesn't translate well across mobile devices.
+- Not mobile friendly, the data table doesn't translate well across smaller screens.
 
 
