@@ -28,6 +28,14 @@ Take a look at the app [here](https://spring-moon-3266.fly.dev/).
 - The data is then sent to the frontend via the websocket.
 - The `index.js` sets a 2 second interval to repeatedly do this gathering and sending of data.
 
+## Formula
+
+The `filterByNDZ` function (from the `lib` directory) calculates whether or not a drone is within the NDZ. The result is calculated using the distance formula: 
+
+$distance = sqrt((x2-x1)^2 + (y2-y1)^2)$
+
+Coordinates (x1, y1) are the coordinates of the drone and (x2, y2) are the coordinates of the NDZ origin. The drone is within the NDZ if the distance is less than or equal to the radius of the NDZ.
+
 ## Database
 
 - The database is provided by [MongoDB](https://www.mongodb.com/) and [Mongoose](https://mongoosejs.com/index.html) is used for interacting with it.
