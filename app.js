@@ -1,5 +1,12 @@
 const config = require('./utils/config')
+
+const { createServer }  = require('http')
+const express = require('express')
 const WebSocket = require('ws')
+
+const app = express()
+app.use(express.static('build'))
+
 const PORT = process.env.PORT || 3001
 
 const { connectDb } = require('./lib/connectDb')
@@ -9,7 +16,7 @@ const getAllFromDb = require('./lib/getAllFromDb')
 connectDb(config.MONGODB_URI)
 setInterval(updateDatabase, 2000)
 
-const wss = new WebSocket.Server({ PORT }) 
+const wss = new WebSocket.Server({ server:app.listen(PORT) }) 
 wss.on('connection', (ws) => {
   getAllFromDb().then(data => ws.send(JSON.stringify(data)))
 

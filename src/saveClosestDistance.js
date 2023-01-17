@@ -7,7 +7,6 @@ const saveClosestDistance = async (pilot) => {
     })
 
     await newClosestDistance.save()
-    console.log('Saved closest distance')
 }
 
 module.exports = { saveClosestDistance }
