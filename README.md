@@ -12,4 +12,3 @@ Take a look at the app [here](https://spring-moon-3266.fly.dev/).
 
 - Next `updateDatabase`
 
-![Backend Diagram 0](/doc/backend-diagram-1.svg)
