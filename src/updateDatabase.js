@@ -1,8 +1,8 @@
-const { scrape } = require('./scrape')
+const { scrapeAndParse } = require('./scrapeAndParse')
 const { saveAll } = require('./saveAll')
 
 updateDatabase = async () => {
-    const ndzPilots = await scrape()
+    const ndzPilots = await scrapeAndParse()
     if (!ndzPilots) return
     await Promise.all(ndzPilots.map(saveAll))
 }

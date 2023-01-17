@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001
 
 const { connectDb } = require('./lib/connectDb')
 const { updateDatabase } = require('./src/updateDatabase')
-const getAllFromDb = require('./lib/getAllFromDb')
+const getAllFromDb = require('./src/getAllFromDb')
 
 connectDb(config.MONGODB_URI)
 setInterval(updateDatabase, 2000)

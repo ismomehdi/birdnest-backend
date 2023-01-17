@@ -1,6 +1,6 @@
-const { savePilot } = require('./savePilot')
-const { isClosestDistance } = require('./isClosestDistance')
-const { saveClosestDistance } = require('./saveClosestDistance')
+const { savePilot } = require('../lib/savePilot')
+const { isClosestDistance } = require('../lib/isClosestDistance')
+const { saveClosestDistance } = require('../lib/saveClosestDistance')
 
 const saveAll = async (pilot) => {
     await savePilot(pilot)
