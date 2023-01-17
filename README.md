@@ -5,5 +5,7 @@ Take a look at the app [here](https://spring-moon-3266.fly.dev/).
 
 ## App Logic
 
-- The backend server gets data from the API.
-- 
+- The index sets a 2 second interval to repeatedly call `updateDatabase`.
+- Then `updateDatabase` calls `scrapeAndParse` which pulls the drone/pilot data from the API and returns the processed data to `updateDatabase`.
+
+![Backend Diagram 0](/doc/backend-diagram-0.svg)
