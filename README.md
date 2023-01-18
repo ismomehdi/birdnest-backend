@@ -42,7 +42,7 @@ Coordinates (x1, y1) are the coordinates of the drone and (x2, y2) are the coord
 
 - The database is provided by [MongoDB](https://www.mongodb.com/) and [Mongoose](https://mongoosejs.com/index.html) is used for interacting with it.
 - The database automatically removes the pilot data in 10 minutes (since the document was last updated).
-- The `closestDistance` collection is limited to only one document. That way whenever a new document is added, the old one is removed.
+- The `closestDistance` collection is used for recording the all time closest distance. It is limited to only one document. That way whenever a new document is added, the old one is removed.
 
 ## Frontend
 
@@ -55,5 +55,6 @@ Take a look at the frontend [here](https://github.com/ismomehdi/birdnest-fronten
 - MongoDB checks for expired documents every 60 seconds. As a result the pilot data could persist in the database slightly more than 10 minutes. Also, the workload [might affect the expiration time](https://www.mongodb.com/docs/manual/core/index-ttl/#timing-of-the-delete-operation).
 - Proper unit tests are needed.
 - Not mobile friendly, the data table doesn't translate well across smaller screens.
+- The option to sort the table would be handy.
 
 
