@@ -7,7 +7,7 @@ NOTE: This is the backend repository. The frontend is [here](https://github.com/
 
 ## Folder Structure
 
-- The main imported functions are in the `src` directory.
+- The main functions are in the `src` directory.
 - The `lib` directory contains services that are used by the `src` and the `index.js`.
 - The `models` directory contains database models.
 - The `util` directory contains general configuration.
