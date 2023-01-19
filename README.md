@@ -23,12 +23,12 @@ The main file is `index.js`.
 
 - Next `updateDatabase` uses the map function to call `SaveAll` on every pilot in the nzdPilots array.
 - `SaveAll` saves all the pilots in the database.
-- `SaveAll` checks if the data contains a new `closestDistance`. If it finds one, it saves it to the database.
+- `SaveAll` checks if the data contains a new all time `closestDistance`. If it finds one, it saves it to the database. This is used for the *'So far, the closest distance to the nest...'* text at the bottom of the table.
 
 ![Backend Diagram 1](doc/backend-diagram-1.svg)
 
 - The `index.js` uses a [websocket](https://github.com/websockets/ws) to establish a connection to the frontend.
-- When the connection is ready, the `index.js` calls `getAllFromDb` which returns the all needed data from the database.
+- When the connection is ready, the `index.js` calls `getAllFromDb` which returns all the needed data from the database.
 - The data is then sent to the frontend via the websocket.
 - The `index.js` sets a 2 second interval to repeatedly do this gathering and sending of data.
 
